@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GKS — Тарифы сопровождения</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Mulish', sans-serif;
+    background: #faf8f5;
+    color: #1a1a1a;
+    padding: 48px 32px;
+    min-height: 100vh;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .page-header .flag {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: #1a1a1a;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+  }
+
+  .page-header p {
+    font-size: 13px;
+    color: #888;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .col {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  }
+
+  .col.featured {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 8px 32px rgba(180,150,110,0.15);
+    outline: 1.5px solid #c9a97a;
+  }
+
+  .col-head {
+    padding: 28px 24px 22px;
+    border-bottom: 1px solid #f0ede8;
+  }
+
+  .tier-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 6px;
+  }
+
+  .col.featured .tier-label {
+    color: #c9a97a;
+  }
+
+  .price {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+    margin-bottom: 2px;
+  }
+
+  .price-note {
+    font-size: 11px;
+    color: #bbb;
+    font-weight: 300;
+  }
+
+  .col-body {
+    padding: 0 24px 24px;
+  }
+
+  .section {
+    padding-top: 18px;
+  }
+
+  .section-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #bbb;
+    margin-bottom: 9px;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  ul li {
+    font-size: 12.5px;
+    font-weight: 400;
+    color: #333;
+    padding: 3.5px 0 3.5px 16px;
+    position: relative;
+    line-height: 1.45;
+  }
+
+  ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #d4b896;
+  }
+
+  .col.featured ul li::before {
+    background: #c9a97a;
+  }
+
+  .divider {
+    height: 1px;
+    background: #f0ede8;
+    margin-top: 18px;
+  }
+
+  .warn {
+    margin-top: 14px;
+    padding: 10px 12px;
+    background: #fdf6ec;
+    border-radius: 8px;
+    border-left: 2px solid #e8c87a;
+    font-size: 11px;
+    color: #8a6d3b;
+    line-height: 1.55;
+    font-weight: 400;
+  }
+
+  .not-included {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: #f8f8f8;
+    border-radius: 10px;
+  }
+
+  .not-included-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #bbb;
+    margin-bottom: 8px;
+  }
+
+  .not-included ul li {
+    font-size: 11.5px;
+    color: #aaa;
+    font-weight: 300;
+  }
+
+  .not-included ul li::before {
+    background: #ddd;
+    width: 4px;
+    height: 4px;
+    top: 8px;
+  }
+
+  .gate {
+    margin: 14px 0 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .gate-interview {
+    background: #fef9ec;
+    color: #b8860b;
+    border: 1px solid #f0d98a;
+  }
+
+  .gate-accepted {
+    background: #f0faf4;
+    color: #2d7a4f;
+    border: 1px solid #a3d9b8;
+  }
+
+  .gate + ul {
+    padding-left: 0;
+    margin-top: 8px;
+  }
+
+  .gate + ul li {
+    padding-left: 16px;
+  }
+
+  .badge-popular {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    background: #c9a97a;
+    color: #fff;
+    border-radius: 20px;
+    margin-bottom: 8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="flag">🇰🇷</div>
+  <h1>Сопровождение поступления по гранту GKS</h1>
+  <p>Подача — март 2027 · @vilsorovna</p>
+</div>
+
+<div class="grid">
+
+  <!-- ТАРИФ 1 -->
+  <div class="col">
+    <div class="col-head">
+      <p class="tier-label">Тариф 1</p>
+      <p class="price">20 000 ₽</p>
+      <p class="price-note">Разовая оплата</p>
+    </div>
+    <div class="col-body">
+
+      <div class="section">
+        <p class="section-title">Стратегическая сессия</p>
+        <ul>
+          <li>Анализ профиля + оценка конкурентоспособности заявки</li>
+          <li>Реалистичная оценка шансов</li>
+          <li>Подбор университетов и программ</li>
+          <li>Выбор трека подачи</li>
+          <li>Рекомендации по усилению заявки</li>
+          <li>Рекомендации по активностям и сертификатам</li>
+          <li>Индивидуальный план с дедлайнами</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section">
+        <p class="section-title">GKS и процесс подачи</p>
+        <ul>
+          <li>Разбор актуальных правил и структуры GKS 2027</li>
+          <li>Пошаговый план подготовки документов</li>
+          <li>Инструкции по апостилю, медсправке и оформлению</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section">
+        <p class="section-title">Документы</p>
+        <ul>
+          <li>Анализ черновиков: мотивационное письмо + стади план</li>
+          <li>Рекомендации по структуре, логике и позиционированию</li>
+        </ul>
+        <div class="warn">⚠️ Черновики должны быть на английском или корейском языке. Перевод с русского и повторная проверка — оплачиваются отдельно.</div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section">
+        <p class="section-title">Созвоны</p>
+        <ul>
+          <li>Стратегическая сессия</li>
+          <li>Разбор мотивационного письма и стади плана</li>
+          <li>Финальный созвон перед отправкой</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section">
+        <p class="section-title">Поддержка в Telegram</p>
+        <ul>
+          <li>Все вопросы, связанные с поступлением</li>
+        </ul>
+      </div>
+
+      <div class="not-included">
+        <p class="not-included-title">Не входит в тариф</p>
+        <ul>
+          <li>Сессия по разработке идей и структуры документов</li>
+          <li>Перевод с русского языка</li>
+          <li>Рекомендательное письмо</li>
+          <li>Повторная проверка после правок</li>
+          <li>Помощь с языковыми экзаменами</li>
+          <li>Ежемесячные контрольные созвоны</li>
+          <li>Подготовка к интервью</li>
+          <li>Визовое сопровождение</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ТАРИФ 2 -->
+  <div class="col featured">
+    <div class="col-head">
+      <div class="badge-popular">Популярный выбор</div>
+      <p class="tier-label">Тариф 2</p>
+      <p class="price">35 000 ₽</p>
+      <p class="price-note">Разовая оплата</p>
+    </div>
+    <div class="col-body">
+
+      <div class="section">
+        <p class="section-title">Всё из тарифа 1, плюс:</p>
+      </div>
+
+      <div class="section">
+        <p class="section-title">Экзамены</p>
+        <ul>
+          <li>Стратегия подготовки к IELTS и TOPIK</li>
+          <li>Помощь с регистрацией и оплатой</li>
+          <li>Рекомендации по подготовке</li>
+          <li>Проверенные курсы и репетиторы — по запросу</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section">
+        <p class="section-title">Углублённая работа с документами</p>
+        <ul>
+          <li>Глубокий анализ и корректировки: мотивационное письмо, стади план, 1 рекомендательное письмо</li>
+          <li>Повторная проверка после внесения правок</li>
+          <li>Рекомендации по нарративу и позиционированию</li>
+          <li>Финальный аудит пакета перед отправкой</li>
+          <li>Перевод документов с русского языка — входит в тариф</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section">
+        <p class="section-title">Созвоны</p>
+        <ul>
+          <li>Стратегическая сессия</li>
+          <li>Разбор мотивационного письма и стади плана</li>
+          <li>Ежемесячный контрольный созвон</li>
+          <li>Финальный созвон перед отправкой</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section">
+        <p class="section-title">Поддержка в Telegram</p>
+        <ul>
+          <li>Все вопросы, связанные с поступлением</li>
+          <li>Ответ в течение 24 часов</li>
+          <li>Корректировка стратегии при необходимости</li>
+        </ul>
+      </div>
+
+      <div class="not-included">
+        <p class="not-included-title">Не входит в тариф</p>
+        <ul>
+          <li>Дополнительное рекомендательное письмо</li>
+          <li>Сессия по разработке идей и структуры документов</li>
+          <li>Несколько раундов корректировок</li>
+          <li>Контроль дедлайнов и отслеживание прогресса</li>
+          <li>Подготовка к интервью</li>
+          <li>Визовое сопровождение</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ТАРИФ 3 -->
+  <div class="col">
+    <div class="col-head">
+      <p class="tier-label">Тариф 3 · Максимальный</p>
+      <p class="price">50 000 ₽</p>
+      <p class="price-note">Разовая оплата · интервью и виза включены</p>
+    </div>
+    <div class="col-body">
+
+      <div class="section">
+        <p class="section-title">Всё из тарифов 1 и 2, плюс:</p>
+      </div>
+
+      <div class="section">
+        <p class="section-title">Углублённая работа с документами</p>
+        <ul>
+          <li>Сессия по разработке идей и структуры: мотивационное письмо + стади план + рекомендательное письмо</li>
+          <li>Несколько раундов корректировок</li>
+          <li>Адаптация текстов на английский / корейский при необходимости</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section">
+        <p class="section-title">Созвоны</p>
+        <ul>
+          <li>Стратегическая сессия</li>
+          <li>Разбор мотивационного письма, стади плана и рекомендательного письма</li>
+          <li>1–2 раза в месяц на протяжении всей подготовки</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section">
+        <p class="section-title">Поддержка в Telegram</p>
+        <ul>
+          <li>Все вопросы, связанные с поступлением</li>
+          <li>Приоритетный ответ в течение 12 часов</li>
+          <li>Контроль дедлайнов + отслеживание прогресса</li>
+          <li>Сопровождение на всех этапах отбора</li>
+        </ul>
+      </div>
+
+      <div class="gate gate-interview">
+        <span>→</span> Если прошли на интервью:
+      </div>
+      <ul>
+        <li>Разбор типичных вопросов и формулировка ответов</li>
+        <li>1 пробное интервью 1:1 на английском — 60 минут</li>
+      </ul>
+
+      <div class="gate gate-accepted">
+        <span>→</span> Если приняты:
+      </div>
+      <ul>
+        <li>Помощь с визовыми документами</li>
+        <li>Рекомендации по общежитию и переезду</li>
+        <li>Чек-лист первых шагов после прилёта</li>
+      </ul>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
